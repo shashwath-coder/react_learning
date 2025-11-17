@@ -8,7 +8,7 @@ function App() {
     //console.log("clicked", Math.random());
     if(counter<20)
     {
-    setCounter(counter+1)
+    setCounter(counter+1) //setCounter by default returns a value... hence no need to write return explicitly even if we used curly braces
     }
   }
   const removeValue=()=>{
