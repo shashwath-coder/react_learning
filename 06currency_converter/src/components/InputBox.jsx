@@ -13,7 +13,7 @@ function InputBox({
     return(
         <div className={`bg-white p-3 rounded-lg text-sm
             flex ${className}`}>
-                <div ckassName="W-1/2">
+                <div className="W-1/2">
                 <label htmlFor="my_amt" 
                 className="text-black/40 mb-2 inline-block">{label}</label>
                 <input
