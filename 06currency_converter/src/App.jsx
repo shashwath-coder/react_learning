@@ -100,4 +100,6 @@ function App() {
 
 }
 
+/* When there’s a change in the input box, first onChange fires, then onAmountChange is called with e.target.value, 
+which goes into setAmount, React schedules a re-render, and the updated amount is passed back to the input via value. */
 export default App

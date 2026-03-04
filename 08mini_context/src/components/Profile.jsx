@@ -1,7 +1,8 @@
 import React ,{useContext} from "react";
-import UserContextProvider from "../context/UserContextProvider";
 import UserContext from "../context/UserContext";
 
+//Login does NOT talk to Profile directly...They communicate through the Provider
+//Profile gets new user
 function Profile()
 {
     const {user}=useContext(UserContext)
