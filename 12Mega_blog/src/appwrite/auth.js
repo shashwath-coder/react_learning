@@ -9,9 +9,54 @@ export class AuthService{
     constructor(){
         this.client
         .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.projectId)
+        .setProject(conf.appwriteProjectId);
+        this.account=new Account(this.client);
+    }
+    async createAccount({email,password,name})
+    {
+        try {
+            const userAccount= await this.account.createEmailSession(ID.unique(),email,password)
+            if(userAccount)
+            {
+                return this.login({email,password});
+            }
+            
+        } catch (error) {
+            throw error;
+        }
     }
 
+    async login({email,password})
+    {
+        try{
+            return await this.account.createEmailSession(email,password);
+        }
+        catch(error)
+        {
+            throw error;
+        }
+    }
+    
+    async getCurrentUser() // to check if account is there or not
+    {
+        try {
+            return await this.account.get();
+        } catch (error) {
+            console.log("Appwrite service :: getCurrentUser :: error",error);
+        }
+
+        return null;
+    }
+    
+    async logout()
+    {
+        try {
+            await this.account.deleteSessions()
+        } catch (error) {
+            console.log("Appwrite service::logout::error", error);
+            
+        }
+    }
 }
 
 export authService=new AuthService()
