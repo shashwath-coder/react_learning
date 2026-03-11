@@ -1,27 +1,33 @@
-import conf from '../conf.js';
+import conf from '../conf/conf.js';
 import {Client,Account,ID} from "appwrite"
 
+// This allows other files to import the class if needed.
 export class AuthService{
 
-    client=new Client();
+    client=new Client(); //appwrite connection obj
     account;
 
     constructor(){
         this.client
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId);
+        .setEndpoint(conf.appwriteUrl) //Connect to your Appwrite backend
+        .setProject(conf.appwriteProjectId); // now frontend know Send all requests to this Appwrite project
         this.account=new Account(this.client);
     }
     async createAccount({email,password,name})
     {
         try {
-            const userAccount= await this.account.createEmailSession(ID.unique(),email,password)
+            const userAccount= await this.account.create(ID.unique(),email,password,name);
             if(userAccount)
             {
                 return this.login({email,password});
             }
+            else
+            {
+                return userAccount;
+            }
             
-        } catch (error) {
+        } 
+        catch (error) {
             throw error;
         }
     }
@@ -37,7 +43,7 @@ export class AuthService{
         }
     }
     
-    async getCurrentUser() // to check if account is there or not
+    async getCurrentUser() // to check if someone is curr logged in
     {
         try {
             return await this.account.get();
@@ -59,6 +65,10 @@ export class AuthService{
     }
 }
 
-export authService=new AuthService()
-
+const authService=new AuthService() // becoz of this , only one object exists in the entire app.
+// authService.login()
+// authService.logout()
+// authService.getCurrentUser()
+// all use the same Appwrite connection.
+// This pattern is called Singleton Pattern.
 export default authService
