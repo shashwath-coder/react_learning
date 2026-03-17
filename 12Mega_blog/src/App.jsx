@@ -27,11 +27,18 @@ function App() {
   })
   .finally(()=>setLoading(false))
 },[])
-  return (
-    <>
-      
-    </>
-  )
+  return !loading? (
+    <div className='min-h-screen '>
+      <div className=''>
+        <Header />
+        <main>
+          TODO: <Outlet /> 
+          {/* Outlet = place where child route components render inside a parent layout. */}
+        </main>
+        <Footer />
+      </div>
+    </div>
+  ) : null
 }
 
 export default App

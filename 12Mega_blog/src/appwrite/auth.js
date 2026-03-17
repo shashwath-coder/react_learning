@@ -6,7 +6,7 @@ export class AuthService{
 
     client=new Client(); //appwrite connection obj
     account;
-
+// all appwrite return are promises which can be handled using .then .catch
     constructor(){
         this.client
         .setEndpoint(conf.appwriteUrl) //Connect to your Appwrite backend
@@ -57,7 +57,7 @@ export class AuthService{
     async logout()
     {
         try {
-            await this.account.deleteSessions()
+            await this.account.deleteSession('current')
         } catch (error) {
             console.log("Appwrite service::logout::error", error);
             
